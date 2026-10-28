@@ -1,0 +1,111 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "users": {
+      ".read": "auth != null",
+      "$uid": {
+        ".write": "auth != null && auth.uid === $uid",
+        ".validate": "newData.hasChildren(['uid', 'name', 'nameLower', 'email', 'createdAt', 'online', 'lastSeen'])",
+        "uid": {
+          ".validate": "newData.isString() && newData.val() === $uid"
+        },
+        "name": {
+          ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 100"
+        },
+        "nameLower": {
+          ".validate": "newData.isString() && newData.val().length <= 100"
+        },
+        "email": {
+          ".validate": "newData.isString() && newData.val().length <= 254"
+        },
+        "createdAt": {
+          ".validate": "newData.isNumber()"
+        },
+        "online": {
+          ".validate": "newData.isBoolean()"
+        },
+        "lastSeen": {
+          ".validate": "newData.isNumber()"
+        },
+        "$other": {
+          ".validate": false
+        }
+      }
+    },
+    "userChats": {
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid",
+        "$chatId": {
+          ".write": "auth != null && root.child('chats').child($chatId).child('participants').child(auth.uid).val() === true && root.child('chats').child($chatId).child('participants').child($uid).val() === true && ((auth.uid === $uid && newData.child('peerId').isString() && newData.child('peerId').val() !== $uid && root.child('chats').child($chatId).child('participants').child(newData.child('peerId').val()).val() === true) || (auth.uid !== $uid && newData.child('peerId').val() === auth.uid))",
+          ".validate": "newData.hasChildren(['peerId', 'lastMessage', 'lastType', 'lastSenderId', 'updatedAt', 'unreadCount'])",
+          "peerId": {
+            ".validate": "newData.isString()"
+          },
+          "lastMessage": {
+            ".validate": "newData.isString() && newData.val().length <= 1000"
+          },
+          "lastType": {
+            ".validate": "newData.val() === 'text' || newData.val() === 'location'"
+          },
+          "lastSenderId": {
+            ".validate": "newData.isString() && root.child('chats').child($chatId).child('participants').child(newData.val()).val() === true"
+          },
+          "updatedAt": {
+            ".validate": "newData.isNumber()"
+          },
+          "unreadCount": {
+            ".validate": "newData.isNumber() && newData.val() >= 0"
+          },
+          "$other": {
+            ".validate": false
+          }
+        }
+      }
+    },
+    "chats": {
+      "$chatId": {
+        "participants": {
+          "$uid": {
+            ".write": "auth != null && newData.val() === true && root.child('users').child($uid).exists() && ((auth.uid === $uid && ($chatId.matches('^' + auth.uid + '_.*$') || $chatId.matches('^.*_' + auth.uid + '$'))) || (auth.uid !== $uid && root.child('chats').child($chatId).child('participants').child(auth.uid).val() === true && ($chatId === auth.uid + '_' + $uid || $chatId === $uid + '_' + auth.uid)))",
+            ".validate": "newData.isBoolean()"
+          }
+        },
+        "messages": {
+          ".read": "auth != null && root.child('chats').child($chatId).child('participants').child(auth.uid).val() === true",
+          ".indexOn": ["createdAt"],
+          "$messageId": {
+            ".write": "auth != null && root.child('chats').child($chatId).child('participants').child(auth.uid).val() === true && !data.exists() && newData.child('senderId').val() === auth.uid",
+            ".validate": "newData.hasChildren(['senderId', 'type', 'createdAt']) && newData.child('createdAt').isNumber() && ((newData.child('type').val() === 'text' && newData.child('text').isString() && newData.child('text').val().length > 0 && newData.child('text').val().length <= 1000 && !newData.hasChild('location')) || (newData.child('type').val() === 'location' && newData.child('location').hasChildren(['latitude', 'longitude']) && newData.child('location').child('latitude').isNumber() && newData.child('location').child('latitude').val() >= -90 && newData.child('location').child('latitude').val() <= 90 && newData.child('location').child('longitude').isNumber() && newData.child('location').child('longitude').val() >= -180 && newData.child('location').child('longitude').val() <= 180 && !newData.hasChild('text')))",
+            "senderId": {
+              ".validate": "newData.isString() && newData.val() === auth.uid"
+            },
+            "type": {
+              ".validate": "newData.val() === 'text' || newData.val() === 'location'"
+            },
+            "text": {
+              ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 1000"
+            },
+            "location": {
+              "latitude": {
+                ".validate": "newData.isNumber() && newData.val() >= -90 && newData.val() <= 90"
+              },
+              "longitude": {
+                ".validate": "newData.isNumber() && newData.val() >= -180 && newData.val() <= 180"
+              },
+              "$other": {
+                ".validate": false
+              }
+            },
+            "createdAt": {
+              ".validate": "newData.isNumber()"
+            },
+            "$other": {
+              ".validate": false
+            }
+          }
+        }
+      }
+    }
+  }
+}

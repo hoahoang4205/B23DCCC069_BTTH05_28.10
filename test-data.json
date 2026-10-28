@@ -1,0 +1,135 @@
+{
+  "users": {
+    "user_an_01": {
+      "uid": "user_an_01",
+      "name": "Nguyễn Văn An",
+      "nameLower": "nguyen van an",
+      "email": "an@test.com",
+      "createdAt": 1730000000000,
+      "online": true,
+      "lastSeen": 1730100000000
+    },
+    "user_binh_02": {
+      "uid": "user_binh_02",
+      "name": "Trần Thị Bình",
+      "nameLower": "tran thi binh",
+      "email": "binh@test.com",
+      "createdAt": 1730001000000,
+      "online": true,
+      "lastSeen": 1730100000000
+    },
+    "user_hoa_03": {
+      "uid": "user_hoa_03",
+      "name": "Lê Thị Hoa",
+      "nameLower": "le thi hoa",
+      "email": "hoa@gmail.com",
+      "createdAt": 1730002000000,
+      "online": false,
+      "lastSeen": 1730099000000
+    },
+    "user_minh_04": {
+      "uid": "user_minh_04",
+      "name": "Hoàng Đức Minh",
+      "nameLower": "hoang duc minh",
+      "email": "minh@test.com",
+      "createdAt": 1730003000000,
+      "online": false,
+      "lastSeen": 1730020000000
+    }
+  },
+  "chats": {
+    "user_an_01_user_binh_02": {
+      "messages": {
+        "msg_01": {
+          "senderId": "user_an_01",
+          "type": "text",
+          "text": "Chào Bình nhé! Chiều nay có rảnh không?",
+          "createdAt": 1730100000000
+        },
+        "msg_02": {
+          "senderId": "user_binh_02",
+          "type": "text",
+          "text": "Chào An! Tầm 4h chiều tớ rảnh nè, có hẹn gì thế?",
+          "createdAt": 1730100060000
+        },
+        "msg_03": {
+          "senderId": "user_an_01",
+          "type": "location",
+          "location": {
+            "latitude": 21.0285,
+            "longitude": 105.8542
+          },
+          "createdAt": 1730100120000
+        },
+        "msg_04": {
+          "senderId": "user_an_01",
+          "type": "text",
+          "text": "Tớ đang ở quán cà phê này, ra làm bài tập thực hành nha!",
+          "createdAt": 1730100130000
+        },
+        "msg_05": {
+          "senderId": "user_binh_02",
+          "type": "text",
+          "text": "Oke chốt luôn, 15 phút nữa tớ có mặt nhé 👍",
+          "createdAt": 1730100180000
+        }
+      }
+    },
+    "user_an_01_user_hoa_03": {
+      "messages": {
+        "msg_h01": {
+          "senderId": "user_hoa_03",
+          "type": "text",
+          "text": "An ơi, gửi cho mình tài liệu môn Lập trình di động với!",
+          "createdAt": 1730098000000
+        },
+        "msg_h02": {
+          "senderId": "user_hoa_03",
+          "type": "text",
+          "text": "Bài 5 chat realtime này làm hay ghê.",
+          "createdAt": 1730098500000
+        }
+      }
+    }
+  },
+  "userChats": {
+    "user_an_01": {
+      "user_an_01_user_binh_02": {
+        "peerId": "user_binh_02",
+        "lastMessage": "Oke chốt luôn, 15 phút nữa tớ có mặt nhé 👍",
+        "lastType": "text",
+        "lastSenderId": "user_binh_02",
+        "updatedAt": 1730100180000,
+        "unreadCount": 0
+      },
+      "user_an_01_user_hoa_03": {
+        "peerId": "user_hoa_03",
+        "lastMessage": "Bài 5 chat realtime này làm hay ghê.",
+        "lastType": "text",
+        "lastSenderId": "user_hoa_03",
+        "updatedAt": 1730098500000,
+        "unreadCount": 2
+      }
+    },
+    "user_binh_02": {
+      "user_an_01_user_binh_02": {
+        "peerId": "user_an_01",
+        "lastMessage": "Oke chốt luôn, 15 phút nữa tớ có mặt nhé 👍",
+        "lastType": "text",
+        "lastSenderId": "user_binh_02",
+        "updatedAt": 1730100180000,
+        "unreadCount": 0
+      }
+    },
+    "user_hoa_03": {
+      "user_an_01_user_hoa_03": {
+        "peerId": "user_an_01",
+        "lastMessage": "Bài 5 chat realtime này làm hay ghê.",
+        "lastType": "text",
+        "lastSenderId": "user_hoa_03",
+        "updatedAt": 1730098500000,
+        "unreadCount": 0
+      }
+    }
+  }
+}
